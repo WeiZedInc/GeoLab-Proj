@@ -3,35 +3,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GeoLab_Proj.MainPage">
 
-        <VerticalStackLayout
+    <VerticalStackLayout
             Spacing="25"
             Padding="30,0"
             VerticalOptions="Center">
 
-            <Entry
-            x:Name="Entry"
-            MaxLength="100"/>
-            
-            <Label
-                x:Name="LabelOut"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
-            
-
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
-            
-            <Polygon x:Name="Polygon"
-                Fill="AliceBlue"
+        <!--40,10 70,80 10,50-->
+        <Polygon x:Name="Polygon"
+                Fill="Yellow"
                 Stroke="Green"
                 StrokeThickness="5" 
                 HorizontalOptions="Center"/>
 
-        </VerticalStackLayout>
+        <Entry
+            HorizontalOptions="Fill"
+            x:Name="Entry"
+            MaxLength="100"/>
+
+        <Label
+                x:Name="LabelOut"
+                SemanticProperties.HeadingLevel="Level2"
+                FontSize="18"
+                HorizontalOptions="Center" />
+
+
+        <Button
+                x:Name="CounterBtn"
+                Text="Draw Polygon"
+                Clicked="OnDrawPolygonClicked"
+                HorizontalOptions="Center" />
+
+
+    </VerticalStackLayout>
 </ContentPage>

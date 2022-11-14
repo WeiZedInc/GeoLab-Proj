@@ -9,22 +9,22 @@ public partial class MainPage : ContentPage
 		InitializeComponent();
 	}
 
-	private void OnCounterClicked(object sender, EventArgs e)
+	private void OnDrawPolygonClicked(object sender, EventArgs e)
 	{
 		LabelOut.Text = "";
 		Polygon.Points.Clear();
-		List<double> vectors = new();
 
         string inputValues = Entry.Text;
         if (string.IsNullOrWhiteSpace(inputValues))
         {
-            Console.WriteLine("Try next time to input some values...");
-            
+            LabelOut.Text = "Try next time to input some values...";
+            return;
         }
+
         string[] cuttedValues = inputValues.Split(" ", StringSplitOptions.TrimEntries);
-		foreach (var item in cuttedValues)
+        Point p;
+        foreach (var item in cuttedValues)
 		{
-            Point p;
             Point.TryParse(item, out p);
             Polygon.Points.Add(p);
             LabelOut.Text += " " + p;
