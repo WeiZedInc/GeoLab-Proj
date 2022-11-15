@@ -1,4 +1,5 @@
-﻿using Point = Microsoft.Maui.Graphics.Point;
+﻿using Microsoft.Maui.Controls.Shapes;
+using Point = Microsoft.Maui.Graphics.Point;
 
 namespace GeoLab_Proj;
 
@@ -12,8 +13,13 @@ public partial class MainPage : ContentPage
 	private void OnDrawPolygonClicked(object sender, EventArgs e)
 	{
 		LabelOut.Text = "";
-		Polygon.Points.Clear();
+        Polygon.Points.Clear();
 
+        ManageInput();
+    }
+
+    void ManageInput()
+    {
         string inputValues = Entry.Text;
         if (string.IsNullOrWhiteSpace(inputValues))
         {
@@ -23,12 +29,29 @@ public partial class MainPage : ContentPage
 
         string[] cuttedValues = inputValues.Split(" ", StringSplitOptions.TrimEntries);
         Point p;
-        foreach (var item in cuttedValues)
-		{
-            Point.TryParse(item, out p);
-            Polygon.Points.Add(p);
+        short pointsCounter = 0;
+        foreach (var vec in cuttedValues)
+        {
+            if (pointsCounter == 10) // 10 points limit
+                break;
+
+            pointsCounter++;
+            Point.TryParse(vec, out p);
+            Polygon.Points.Add(OptimizePoints(p));
             LabelOut.Text += " " + p;
         }
     }
-}
+    Point OptimizePoints(Point p)
+    {
+        if (p.X < 10)
+            p.X = p.X * 10;
+        else if (p.X > 100)
+            p.X = p.X / 10;
 
+        if (p.Y < 10)
+            p.Y = p.Y * 10;
+        else if (p.Y > 100)
+            p.Y = p.Y / 10;
+        return p;
+    }
+}

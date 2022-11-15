@@ -8,16 +8,16 @@
             Padding="30,0"
             VerticalOptions="Center">
 
-        <!--40,10 70,80 10,50-->
+        <!--40,10 70,50 10,50-->
         <Polygon x:Name="Polygon"
-                Fill="Yellow"
-                Stroke="Green"
-                StrokeThickness="5" 
+                Fill="white"
+                Stroke="red"
+                StrokeThickness="2" 
                 HorizontalOptions="Center"/>
 
         <Entry
-            HorizontalOptions="Fill"
             x:Name="Entry"
+            HorizontalOptions="Fill"
             MaxLength="100"/>
 
         <Label
@@ -28,11 +28,10 @@
 
 
         <Button
-                x:Name="CounterBtn"
+                x:Name="InputBtn"
                 Text="Draw Polygon"
                 Clicked="OnDrawPolygonClicked"
                 HorizontalOptions="Center" />
-
 
     </VerticalStackLayout>
 </ContentPage>
