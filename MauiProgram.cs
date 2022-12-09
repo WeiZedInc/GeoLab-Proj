@@ -15,10 +15,12 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
+        Routing.RegisterRoute("ResultPage", typeof(ResultPage));
 
         builder.Services.AddSingleton<MainPage>();
-        builder.Services.AddSingleton<ResultPage>();
         builder.Services.AddSingleton<MainVM>();
+        builder.Services.AddTransient<ResultPage>();
+        builder.Services.AddTransient<ResultVM>();
 
         return builder.Build();
 	}

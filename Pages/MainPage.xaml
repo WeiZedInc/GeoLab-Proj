@@ -27,12 +27,19 @@
                 FontSize="18"
                 HorizontalOptions="Center" />
 
-
-        <Button
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Button
                 x:Name="InputBtn"
                 Text="Draw Polygon"
                 Clicked="OnDrawPolygonClicked"
                 HorizontalOptions="Center" />
+            <Button
+                x:Name="CalculateBtn"
+                Text="Calculate"
+                Clicked="CalculateBtn_Clicked"  
+                HorizontalOptions="Center" />
+        </HorizontalStackLayout>
+        
 
     </VerticalStackLayout>
 </ContentPage>

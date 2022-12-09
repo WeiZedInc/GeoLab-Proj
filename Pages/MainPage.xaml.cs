@@ -7,6 +7,7 @@ namespace GeoLab_Proj;
 public partial class MainPage : ContentPage
 {
     readonly MainVM mainVM;
+    public static Polygon Poly;
     public MainPage()
 	{
 		InitializeComponent();
@@ -19,8 +20,14 @@ public partial class MainPage : ContentPage
         LabelOut.Text = "";
         Polygon.Points.Clear();
         Figure.Points.Clear();
+        Poly = Polygon;
 
         mainVM.DrawPoints(ref Entry, ref LabelOut, ref Polygon);
         mainVM.Test(ref LabelOut);
+    }
+
+    private async void CalculateBtn_Clicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("ResultPage");
     }
 }

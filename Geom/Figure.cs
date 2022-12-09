@@ -17,7 +17,7 @@
 
     public static class Figure
     {
-        public static List<Point> Points = new();
+        public static PointCollection Points = new();
         public static double Area()
         {
             double area = 0.0;
