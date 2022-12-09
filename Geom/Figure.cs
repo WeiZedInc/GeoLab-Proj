@@ -1,4 +1,6 @@
-﻿namespace GeoLab_Proj.Geom
+﻿using Windows.Devices.Bluetooth.Advertisement;
+
+namespace GeoLab_Proj.Geom
 {
     public enum AngleType
     {
@@ -143,7 +145,96 @@
             return (bisecA,bisecB, bisecC);
         }
 
+        public static (double x, double y) Orthocenter()
+        {
+            double x, y;
+            if (Points[2].Y - Points[0].Y == 0)
+            {
+                x = Points[1].X;
 
+                double k = -(Points[2].X - Points[1].X) / (Points[2].Y - Points[1].Y);
+
+                y = k * (Points[1].X - Points[0].X) + Points[0].Y;
+                return (x, y);
+            }
+
+            // possible error
+            if (Points[2].Y - Points[1].Y == 0)
+            {
+                x = Points[0].X;
+
+                double k = -(Points[2].X - Points[0].X) / (Points[2].Y - Points[0].Y);
+
+                y = k * (Points[0].X - Points[1].X) + Points[1].Y;
+                return (x, y);
+            }
+
+            double k1, k2;
+
+            k1 = -(Points[2].X - Points[0].X) / (Points[2].Y - Points[0].Y);
+            k2 = -(Points[2].X - Points[1].X) / (Points[2].Y - Points[1].Y);
+
+            x = (Points[1].X * k1 - Points[0].X * k2 - Points[1].Y + Points[0].Y)/(k1-k2);
+            y = k1 * (x - Points[1].X) + Points[1].Y;
+
+            return (x, y);
+        }
+
+        public static (double x, double y) MassCenter()
+        {
+            return ((Points[0].X + Points[1].X + Points[2].X) / 3, (Points[0].Y + Points[1].Y + Points[2].Y) / 3);
+        }
+
+        public static (double x, double y, double radius) CircumscribedCircle()
+        {
+            double kef1 = Math.Pow(Points[0].X, 2) - Math.Pow(Points[1].X, 2) +
+                    Math.Pow(Points[0].Y, 2) - Math.Pow(Points[1].Y, 2);
+            double kef2 = Math.Pow(Points[1].X, 2) - Math.Pow(Points[2].X, 2) +
+                    Math.Pow(Points[1].Y, 2) - Math.Pow(Points[2].Y, 2);
+            double kef3 = (Points[1].X - Points[2].X) * (Points[0].Y - Points[1].Y);
+            double kef4 = (Points[0].X - Points[1].X) * (Points[1].Y - Points[2].Y);
+
+            if (Points[0].Y - Points[1].Y == 0)
+            {
+
+                double k = kef1 / (2 * (Points[0].X - Points[1].X));
+
+                double m = (kef2 - 2 * k * (Points[1].X - Points[2].X)) / (2 * (Points[1].Y - Points[2].Y));
+
+                Point rad = new();
+                rad.X = k;
+                rad.Y = m;
+
+                return (k, m, Side(Points[0], rad));
+            }
+
+            double x = (2 * (Points[0].Y - Points[1].Y) * kef2 - 2 * (Points[1].Y - Points[2].Y) * kef1) /
+                (4 * (kef3 - kef4));
+
+            double y = (kef1 - kef1 * (Points[0].X - Points[1].X)) / (2 * (Points[0].Y - Points[1].Y));
+
+            Point r = new();
+            r.X = x;
+            r.Y = y;
+
+            double radius = Side(Points[0], r);
+
+            return (x, y, radius);
+        }
+
+        public static (double x, double y, double radius) InscribedCircle()
+        {
+            var s = Get3Sides();
+
+            double x = (s.ab * Points[0].X + s.bc * Points[1].X + s.ac * Points[2].X) / (s.ab + s.bc + s.ac);
+            double y = (s.ab * Points[0].Y + s.bc * Points[1].Y + s.ac * Points[2].Y) / (s.ab + s.bc + s.ac);
+
+            Point r = new(); 
+            r.X = x;
+            r.Y = y;
+
+            return (x, y, Side(r, Points[0]));
+        }
 
         #endregion
 
