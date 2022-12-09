@@ -1,4 +1,5 @@
-﻿using Windows.Devices.Bluetooth.Advertisement;
+﻿using Intents;
+using MetalPerformanceShaders;
 
 namespace GeoLab_Proj.Geom
 {
@@ -15,6 +16,23 @@ namespace GeoLab_Proj.Geom
         Рівносторонній,
         Рівнобедренний,
         Довільний
+    }
+    // Типи чотирикутників
+    public enum QudrangleTypeEnum
+    {
+        Квадрат,
+        Прямокутник,
+        Ромб,
+        Паралелограм,
+        Трапеція,
+        Довільний
+    }
+    // Типи трапецій
+    public enum TrapezoidTypeEnum
+    {
+        Рівнобедренна,
+        Прямокутна,
+        Довільна
     }
 
     public static class Figure
@@ -46,6 +64,18 @@ namespace GeoLab_Proj.Geom
             double y = a.Y - b.Y;
             return Math.Sqrt(x * x + y * y);
         }
+        //Перевірка на паралельність
+        private static bool Parallel(Point a, Point b)
+        {
+            double vectorMult = a.X*b.X + a.Y*b.Y;
+
+            double m1 = Math.Sqrt(a.X * a.X + a.Y * a.Y), m2 = Math.Sqrt(b.X * b.X + b.Y * b.Y);
+
+            if (Math.Abs(vectorMult) == m1 * m2)
+                return true;
+            else return false;
+        }
+
 
         /// <returns>returns angle for point b</returns>
         public static double Angle(Point a, Point b, Point c)
@@ -238,6 +268,140 @@ namespace GeoLab_Proj.Geom
 
         #endregion
 
+
+        #region Quadrangle
+        public static (double ab, double bc, double cd, double ad) Get4Sides() =>
+            (Side(Points[0], Points[1]), Side(Points[1], Points[2]), Side(Points[2], Points[3]), Side(Points[0], Points[3]));
+
+        //діагоналі чотирикутника
+        public static (double ac, double bd) GetDiagonales()
+        {
+            double ac = Side(Points[0], Points[2]);
+            double bd = Side(Points[1], Points[3]);
+
+            return (ac, bd);
+        }
+
+        public static (double a, double b, double c, double d) Get4Angles() =>
+            (Angle(Points[3], Points[0], Points[1]), Angle(Points[0], Points[1], Points[2]),
+            Angle(Points[1], Points[2], Points[3]), Angle(Points[2], Points[3], Points[0]));
+
+        // Перевірка на тип чотирикутника
+        public static QudrangleTypeEnum QudrangleType()
+        {
+            if (isSquare())
+                return QudrangleTypeEnum.Квадрат;
+            else
+                if (isRectangle())
+                return QudrangleTypeEnum.Прямокутник;
+            else
+                if (isDiamond())
+                return QudrangleTypeEnum.Ромб;
+            else
+                if (isParallelogram())
+                return QudrangleTypeEnum.Паралелограм;
+            else
+                if (isTrapezoid())
+                return QudrangleTypeEnum.Трапеція;
+            else
+                return QudrangleTypeEnum.Довільний;
+
+        }
+
+        private static bool isParallelogram()
+        {
+            var s = Get4Sides();
+
+            if (s.ab == s.cd && s.bc == s.ad)
+                return true;
+            else return false;
+        }
+
+        private static bool isDiamond()
+        {
+            var s = Get4Sides(); 
+
+            if (s.ab == s.bc && s.bc == s.cd && s.cd == s.ad)
+                return true;
+            else return false;
+        }
+
+        private static bool isRectangle()
+        {
+            var s = Get4Angles();
+
+            if (s.a == s.b && s.b == s.c && s.c == s.d && isParallelogram())
+                return true;
+            else return false;
+        }
+
+        private static bool isSquare() 
+        {
+            if (isDiamond() && isRectangle())
+                return true;
+            else
+                return false;
+        }
+
+        private static bool isTrapezoid() 
+        {
+            Point vAB = new Point();
+            vAB.X = Points[0].X - Points[1].X;
+            vAB.Y = Points[0].Y - Points[1].Y;
+
+            Point vBC = new Point();
+            vBC.X = Points[1].X - Points[2].X;
+            vBC.Y = Points[1].Y - Points[2].Y;
+
+            Point vCD = new Point();
+            vCD.X = Points[2].X - Points[3].X;
+            vCD.Y = Points[2].Y - Points[3].Y;
+
+            Point vDA = new Point();
+            vDA.X = Points[3].X - Points[0].X;
+            vDA.Y = Points[3].Y - Points[0].Y;
+
+            if ((Parallel(vAB, vCD) && !Parallel(vBC, vDA)) || (Parallel(vBC, vDA) && !Parallel(vAB, vCD)))
+                return true;
+            else
+                return false;
+        }
+        // Кінець перевірки на тип чотирикутника
+
+        // Перевірка типів трапеції
+
+        public static TrapezoidTypeEnum TrapezoidType()
+        {
+            if (isRectangleTrapezoid())
+                return TrapezoidTypeEnum.Прямокутна;
+            else
+                if (isIsoscelesTrapezoid())
+                return TrapezoidTypeEnum.Рівнобедренна;
+            else
+                return TrapezoidTypeEnum.Довільна;
+        }
+
+        private static bool isRectangleTrapezoid()
+        {
+            var a = Get4Angles();
+
+            if ((a.a == Math.PI / 2 && a.b == Math.PI / 2) || (a.b == Math.PI / 2 && a.c == Math.PI / 2) ||
+                (a.c == Math.PI / 2 && a.d == Math.PI / 2) || (a.d == Math.PI / 2 && a.a == Math.PI / 2))
+                return true;
+            else
+                return false;
+        }
+
+        private static bool isIsoscelesTrapezoid()
+        {
+            var s = Get4Sides();
+
+            if (s.ab == s.cd || s.bc == s.ad)
+                return true;
+            else return false;
+        }
+
+        #endregion
 
     }
 }
