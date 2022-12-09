@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using GeoLab_Proj.Geom;
+using GeoLab_Proj.Utils;
 using Microsoft.Maui.Controls.Shapes;
 
 namespace GeoLab_Proj
@@ -25,7 +26,6 @@ namespace GeoLab_Proj
             if (cuttedValues == null)
                 return;
 
-            Point p;
             short pointsCounter = 0;
             foreach (var vec in cuttedValues)
             {
@@ -33,14 +33,24 @@ namespace GeoLab_Proj
                     break;
 
                 pointsCounter++;
-                Point.TryParse(vec, out p);
-                labelOut.Text += " " + p;
+                if (Point.TryParse(vec, out Point p))
+                {
+                    labelOut.Text += " " + p;
 
-                Figure.Points.Add(p);
+                    Figure.Points.Add(p);
+                }
             }
 
-            foreach (var point in Figure.Points)
-                polygon.Points.Add(point);
+            if (Figure.Points.Count < 2)
+            {
+                Figure.Points.Clear();
+                // треба повідомити шо дикуха
+            }
+            else
+            {
+                foreach (var point in Figure.Points)
+                    polygon.Points.Add(point);
+            }
         }
 
         public void Test(ref Label labelOut)

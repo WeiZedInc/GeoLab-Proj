@@ -1,6 +1,4 @@
-﻿using Windows.Devices.Bluetooth.Advertisement;
-
-namespace GeoLab_Proj.Geom
+﻿namespace GeoLab_Proj.Geom
 {
     public enum AngleType
     {
@@ -15,6 +13,15 @@ namespace GeoLab_Proj.Geom
         Рівносторонній,
         Рівнобедренний,
         Довільний
+    }
+
+    public enum FigureTypeEnum
+    {
+        Error,
+        Пряма,
+        Трикутник,
+        Чотирикутник,
+        Многокутник
     }
 
     public static class Figure
@@ -57,6 +64,20 @@ namespace GeoLab_Proj.Geom
             return Math.Acos((x + y) / length);
         }
 
+        public static FigureTypeEnum FigureType()
+        {
+            switch (Points.Count)
+            {
+                case 2:
+                    return FigureTypeEnum.Пряма;
+                case 3:
+                    return FigureTypeEnum.Трикутник;
+                case 4:
+                    return FigureTypeEnum.Чотирикутник;
+                default:
+                    return FigureTypeEnum.Многокутник;
+            }
+        }
 
         #region Triangle
         public static AngleType TriangleAngleType()
@@ -179,12 +200,7 @@ namespace GeoLab_Proj.Geom
 
             return (x, y);
         }
-
-        public static (double x, double y) MassCenter()
-        {
-            return ((Points[0].X + Points[1].X + Points[2].X) / 3, (Points[0].Y + Points[1].Y + Points[2].Y) / 3);
-        }
-
+        public static (double x, double y) MassCenter() => ((Points[0].X + Points[1].X + Points[2].X) / 3, (Points[0].Y + Points[1].Y + Points[2].Y) / 3);
         public static (double x, double y, double radius) CircumscribedCircle()
         {
             double kef1 = Math.Pow(Points[0].X, 2) - Math.Pow(Points[1].X, 2) +
@@ -221,7 +237,6 @@ namespace GeoLab_Proj.Geom
 
             return (x, y, radius);
         }
-
         public static (double x, double y, double radius) InscribedCircle()
         {
             var s = Get3Sides();
