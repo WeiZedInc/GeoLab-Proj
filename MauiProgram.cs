@@ -1,6 +1,6 @@
-﻿
-namespace GeoLab_Proj;
+﻿using CommunityToolkit.Maui;
 
+namespace GeoLab_Proj;
 public static class MauiProgram
 {
 	public static MauiApp CreateMauiApp()
@@ -8,13 +8,18 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
-            //.UseMauiCommunityToolkit()
+            .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-		return builder.Build();
+
+        builder.Services.AddSingleton<MainPage>();
+        builder.Services.AddSingleton<ResultPage>();
+        builder.Services.AddSingleton<MainVM>();
+
+        return builder.Build();
 	}
 }

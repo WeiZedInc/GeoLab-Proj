@@ -1,18 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using GeoLab_Proj.Geom;
 using Microsoft.Maui.Controls.Shapes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace GeoLab_Proj.VM
+namespace GeoLab_Proj
 {
-    public class MainVM : ObservableObject
+    public partial class MainVM : ObservableObject
     {
-        List<Point> points = new();
-
-        string[] ManageInput(Entry Entry, Label LabelOut)
+        string[] ManageInput(ref Entry Entry, ref Label LabelOut)
         {
             string inputValues = Entry.Text;
             if (string.IsNullOrWhiteSpace(inputValues))
@@ -25,9 +19,9 @@ namespace GeoLab_Proj.VM
 
         }
 
-        void DrawPoints(Entry entry, Label labelOut, Polygon polygon)
+        public void DrawPoints(ref Entry entry, ref Label labelOut,ref Polygon polygon)
         {
-            var cuttedValues = ManageInput(entry, labelOut);
+            var cuttedValues = ManageInput(ref entry, ref labelOut);
             if (cuttedValues == null)
                 return;
 
@@ -40,12 +34,19 @@ namespace GeoLab_Proj.VM
 
                 pointsCounter++;
                 Point.TryParse(vec, out p);
-                points.Add(p);
                 labelOut.Text += " " + p;
+
+                Figure.Points.Add(p);
             }
 
-            foreach (var point in points)
+            foreach (var point in Figure.Points)
                 polygon.Points.Add(point);
+        }
+
+        public void Test(ref Label labelOut)
+        {
+            var sos = Figure.TriangleType();
+            labelOut.Text = sos.isTriangle + sos.angleType.ToString() + sos.sideType.ToString();
         }
     }
 }

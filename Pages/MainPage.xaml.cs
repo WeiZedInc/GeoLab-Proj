@@ -1,21 +1,26 @@
-﻿using Microsoft.Maui.Controls.Shapes;
-using Point = Microsoft.Maui.Graphics.Point;
+﻿using GeoLab_Proj.Geom;
+using GeoLab_Proj.Utils;
+using Microsoft.Maui.Controls.Shapes;
 
 namespace GeoLab_Proj;
 
 public partial class MainPage : ContentPage
 {
-    List<Point> points = new();
-	public MainPage()
+    readonly MainVM mainVM;
+    public MainPage()
 	{
 		InitializeComponent();
-	}
+        mainVM = ServiceHelper.GetService<MainVM>();
+        BindingContext = mainVM;
+    }
 
-	private void OnDrawPolygonClicked(object sender, EventArgs e)
+    private void OnDrawPolygonClicked(object sender, EventArgs e)
 	{
-		LabelOut.Text = "";
+        LabelOut.Text = "";
         Polygon.Points.Clear();
+        Figure.Points.Clear();
 
-        //DrawPoints();
+        mainVM.DrawPoints(ref Entry, ref LabelOut, ref Polygon);
+        mainVM.Test(ref LabelOut);
     }
 }
