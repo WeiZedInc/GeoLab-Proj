@@ -1,5 +1,4 @@
-﻿using Microsoft.Graphics.Canvas.Effects;
-
+﻿
 namespace GeoLab_Proj.Geom
 {
     public enum AngleType
@@ -107,7 +106,7 @@ namespace GeoLab_Proj.Geom
             return sides;
         }
 
-        public static List<double> AllAngels()
+        public static List<double> AllAngles()
         {
             List<double> angles = new();
 

@@ -54,11 +54,5 @@ namespace GeoLab_Proj
                 foreach (var point in Figure.Points)
                     Points.Add(point);
         }
-
-        public void Test()
-        {
-            var sos = Figure.TriangleType();
-            labelOutText = sos.isTriangle + sos.angleType.ToString() + sos.sideType.ToString();
-        }
     }
 }

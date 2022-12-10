@@ -23,7 +23,7 @@ public partial class MainPage : ContentPage
 
         mainVM.DrawPoints();
 
-        //mainVM.Test(ref LabelOut);
+        
     }
 
     private async void CalculateBtn_Clicked(object sender, EventArgs e)
