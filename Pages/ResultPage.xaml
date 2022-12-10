@@ -7,6 +7,31 @@
              Title="Polygon Information">
     <ScrollView>
         <VerticalStackLayout>
+            <HorizontalStackLayout Margin="10" Padding="10" Spacing="10">
+                
+                <!--  0,100 100,100 0,0  -->
+                <Label Text="Тип фігури: "
+                SemanticProperties.HeadingLevel="Level2"
+                FontSize="18"/>
+                
+                <Label Text="{Binding FigureType}"
+                SemanticProperties.HeadingLevel="Level2"
+                FontSize="18"/>
+
+            </HorizontalStackLayout>
+
+            <CollectionView  ItemsSource="{Binding AllSides}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="x:Double">
+                        <Frame HorizontalOptions="FillAndExpand">
+                            <Grid ColumnDefinitions="*,*">
+                                <Label Text="{Binding .}"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
             
         </VerticalStackLayout>
     </ScrollView>
