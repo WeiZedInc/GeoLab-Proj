@@ -20,6 +20,9 @@ namespace GeoLab_Proj
         List<string> sidesNames = new();
 
         [ObservableProperty]
+        string[] anglesNames = { "AB", "BC", "AC" };
+
+        [ObservableProperty]
         string sideType, angleType;
         [ObservableProperty]
         bool isSideAngleTypeVisible = false;
