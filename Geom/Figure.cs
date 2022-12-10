@@ -1,4 +1,6 @@
-﻿namespace GeoLab_Proj.Geom
+﻿using Microsoft.Graphics.Canvas.Effects;
+
+namespace GeoLab_Proj.Geom
 {
     public enum AngleType
     {
@@ -538,7 +540,54 @@
 
         #region Line
 
+        public static double HorizontalLine()
+        {
+            if (Points[0].Y == Points[1].Y)
+                return Points[0].Y;
+           else return double.NaN;
+        }
 
+        public static double VerticalLine()
+        {
+            if (Points[0].X == Points[1].X)
+                return Points[0].X;
+            else return double.NaN;
+        }
+
+        public static (double k, double b) SlopeEquation()
+        {
+            double k = (Points[1].Y - Points[0].Y) / (Points[1].X - Points[0].X);
+            double b = -Points[0].X * k + Points[0].Y;
+
+            return (k, b); 
+        }
+
+        public static (double x0, double y0, double l, double m) CanonicalEquation()
+        {
+            double l = Points[1].X - Points[0].X;
+            double m = Points[1].Y - Points[0].Y;
+
+            return (Points[0].X, Points[0].Y, l, m);
+        }
+
+        public static (double A, double B, double C) StandartEquation()
+        {
+            double A = Points[0].Y - Points[1].Y;
+            double B = Points[1].X - Points[0].X;
+            double C = -Points[0].X*A - Points[0].Y*B;
+
+            return (A, B, C);
+        }
+
+        public static (double a, double b) InterceptEquation()
+        {
+            var s = StandartEquation();
+
+            double a = s.A / s.C;
+            double b = s.B / s.C;
+
+            return (a, b);
+        }
 
         #endregion
     }
