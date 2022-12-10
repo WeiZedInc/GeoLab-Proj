@@ -381,7 +381,7 @@
                 return false;
         }
         // Кінець перевірки на тип чотирикутника
-
+        //
         // Перевірка типів трапеції
 
         public static TrapezoidTypeEnum TrapezoidType()
@@ -415,7 +415,99 @@
             else return false;
         }
 
+        // Провірка на кола
+
+        // Описане коло
+        public static bool PossibleCircumscribed()
+        {
+            var s = Get4Angles();
+
+            if (s.a + s.c == Math.PI && s.b + s.d == Math.PI)
+                return true;
+            else
+                return false;
+        }
+
+        public static bool PosibleInscribed()
+        {
+            var s = Get4Sides();
+
+            if (s.ab + s.cd == s.bc + s.ad)
+                return true;
+            else
+                return false;
+        }
+
         #endregion
 
+
+        #region Polygon n>4
+
+        private static Point Centroid()
+        {
+            Point centroid = new();
+            foreach (Point i in Points)
+            {
+                centroid.X += i.X;
+                centroid.Y += i.Y;
+            }
+
+            centroid.X /= Points.Count();
+            centroid.Y /= Points.Count();
+
+            return centroid;
+        }
+        public static bool RightPolygon()
+        {
+            if (Points.Count < 3)
+                return false;
+
+            Point centroid = Centroid();
+
+            double len = Side(centroid, Points[0]);
+
+            foreach (Point i in Points)
+            {
+                if (len != Side(i, centroid))
+                    return false;
+            }
+
+            double ang = Angle(Points[Points.Count - 1], Points[0], Points[1]);
+
+            for (int i = 1; i < Points.Count - 1; i++)
+                if (ang != Angle(Points[i - 1], Points[i], Points[i + 1]))
+                    return false;
+
+            if (ang != Angle(Points[Points.Count - 2], Points[Points.Count - 1], Points[0]))
+                return false;
+
+            return true;
+
+        }
+
+        public static (double x, double y, double radius) RightCircum()
+        {
+            if (!RightPolygon())
+                return (0, 0, -1);
+
+            Point r = Centroid();
+
+            return (r.X, r.Y, Side(r, Points[0]));
+        }
+
+        public static (double x, double y, double radius) RightInscr()
+        {
+            if (!RightPolygon())
+                return (0, 0, -1);
+
+            Point r = Centroid();
+            Point mid = new();
+
+            mid.X = (Points[0].X + Points[1].X) / 2;
+            mid.Y = (Points[0].Y + Points[1].Y) / 2;
+
+            return (r.X, r.Y, Side(r, mid));
+        }
+        #endregion
     }
 }
