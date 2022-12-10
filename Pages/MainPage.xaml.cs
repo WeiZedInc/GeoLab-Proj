@@ -17,19 +17,18 @@ public partial class MainPage : ContentPage
 
     private void OnDrawPolygonClicked(object sender, EventArgs e)
     {
-        LabelOut.Text = "";
-        Polygon.Points.Clear();
+        mainVM.LabelOutText = "";
+        mainVM.Points.Clear();
         Figure.Points.Clear();
 
-        mainVM.DrawPoints(ref Entry, ref LabelOut, ref Polygon);
-        Poly = Polygon;
+        mainVM.DrawPoints();
 
         //mainVM.Test(ref LabelOut);
     }
 
     private async void CalculateBtn_Clicked(object sender, EventArgs e)
     {
-        if (Poly.Points.Count == 0)
+        if (mainVM.Points.Count == 0)
         {
             await DisplayAlert("Ooops", "Input coordinates first ;c", "Try again");
             return;

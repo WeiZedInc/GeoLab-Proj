@@ -10,7 +10,6 @@ public partial class ResultPage : ContentPage
 		InitializeComponent();
 		resultVM = ServiceHelper.GetService<ResultVM>();
 		BindingContext = resultVM;
-
 	}
 
 }

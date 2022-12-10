@@ -1,18 +1,23 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using GeoLab_Proj.Geom;
-using GeoLab_Proj.Utils;
-using Microsoft.Maui.Controls.Shapes;
 
 namespace GeoLab_Proj
 {
     public partial class MainVM : ObservableObject
     {
-        string[] ManageInput(ref Entry Entry, ref Label LabelOut)
+        [ObservableProperty]
+        PointCollection points = new();
+        [ObservableProperty]
+        string entryText = "";
+        [ObservableProperty]
+        string labelOutText = "";
+
+        string[] ManageInput()
         {
-            string inputValues = Entry.Text;
+            string inputValues = EntryText;
             if (string.IsNullOrWhiteSpace(inputValues))
             {
-                LabelOut.Text = "Try next time to input some values...";
+                labelOutText = "Try next time to input some values...";
                 return null;
             }
 
@@ -20,9 +25,9 @@ namespace GeoLab_Proj
 
         }
 
-        public void DrawPoints(ref Entry entry, ref Label labelOut,ref Polygon polygon)
+        public async void DrawPoints()
         {
-            var cuttedValues = ManageInput(ref entry, ref labelOut);
+            var cuttedValues = ManageInput();
             if (cuttedValues == null)
                 return;
 
@@ -35,8 +40,7 @@ namespace GeoLab_Proj
                 pointsCounter++;
                 if (Point.TryParse(vec, out Point p))
                 {
-                    labelOut.Text += " " + p;
-
+                    labelOutText += " " + p;
                     Figure.Points.Add(p);
                 }
             }
@@ -44,19 +48,17 @@ namespace GeoLab_Proj
             if (Figure.Points.Count < 2)
             {
                 Figure.Points.Clear();
-                // треба повідомити шо дикуха
+                await Shell.Current.DisplayAlert("Ooops", "Input coordinates first ;c", "Try again");
             }
             else
-            {
                 foreach (var point in Figure.Points)
-                    polygon.Points.Add(point);
-            }
+                    Points.Add(point);
         }
 
-        public void Test(ref Label labelOut)
+        public void Test()
         {
             var sos = Figure.TriangleType();
-            labelOut.Text = sos.isTriangle + sos.angleType.ToString() + sos.sideType.ToString();
+            labelOutText = sos.isTriangle + sos.angleType.ToString() + sos.sideType.ToString();
         }
     }
 }

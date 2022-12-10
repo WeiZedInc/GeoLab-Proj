@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GeoLab_Proj.MainPage"
+             xmlns:view="clr-namespace:GeoLab_Proj"
+             x:DataType="view:MainVM"
              Title="GeoLab">
 
     <VerticalStackLayout
@@ -10,19 +12,19 @@
             VerticalOptions="Center">
 
         <!--40,10 70,50 10,50-->
-        <Polygon x:Name="Polygon"
+        <Polygon Points="{Binding Points}"
                 Fill="white"
                 Stroke="red"
                 StrokeThickness="2" 
                 HorizontalOptions="Center"/>
 
         <Entry
-            x:Name="Entry"
+            Text="{Binding EntryText}"
             HorizontalOptions="Fill"
             MaxLength="100"/>
 
         <Label
-                x:Name="LabelOut"
+                Text="{Binding LabelOutText}"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="18"
                 HorizontalOptions="Center" />
