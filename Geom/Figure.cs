@@ -93,6 +93,32 @@
             return Math.Acos((x + y) / length);
         }
 
+        public static List<double> AllSides() 
+        {
+            List<double> sides = new();
+
+            for (int i = 0; i < Points.Count - 1; i++)
+                sides.Add(Side(Points[i], Points[i + 1]));
+
+            sides.Add(Side(Points[Points.Count-1], Points[0]));
+
+            return sides;
+        }
+
+        public static List<double> AllAngels()
+        {
+            List<double> angles = new();
+
+            angles.Add(Angle(Points[Points.Count - 1], Points[0], Points[1]));
+
+            for (int i = 1; i < Points.Count - 1; i++)
+                angles.Add(Angle(Points[i-1], Points[i], Points[i+1]));
+
+            angles.Add(Angle(Points[Points.Count - 2], Points[Points.Count - 1], Points[0]));
+
+            return angles;
+        }
+
         public static FigureTypeEnum FigureType()
         {
             switch (Points.Count)
@@ -508,6 +534,12 @@
 
             return (r.X, r.Y, Side(r, mid));
         }
+        #endregion
+
+        #region Line
+
+
+
         #endregion
     }
 }
