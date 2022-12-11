@@ -10,11 +10,11 @@
             <!--Base info-->
             <VerticalStackLayout Margin="10" Padding="10" HorizontalOptions="CenterAndExpand">
                 <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-                <Label Text="Тип фігури: " Grid.Row="0" Grid.Column="0" HorizontalOptions="CenterAndExpand"
+                    <Label Text="Тип фігури: " Grid.Row="0" Grid.Column="0" HorizontalOptions="CenterAndExpand"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="18"/>
 
-                <Label Text="{Binding FigureType}" Grid.Column="1" HorizontalOptions="CenterAndExpand"
+                    <Label Text="{Binding FigureType}" Grid.Column="1" HorizontalOptions="CenterAndExpand"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="18"/>
                 </HorizontalStackLayout>
@@ -25,11 +25,11 @@
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="18"/>
                 <HorizontalStackLayout IsVisible="{Binding IsTriangleVisible}" Spacing="10">
-                <Label Text="{Binding SideType}" Grid.Row="1" Grid.Column="1" HorizontalOptions="CenterAndExpand"
+                    <Label Text="{Binding SideType}" Grid.Row="1" Grid.Column="1" HorizontalOptions="CenterAndExpand"
                 IsVisible="{Binding IsTriangleVisible}"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="18"/>
-                <Label Text="{Binding AngleType}" Grid.Row="1" Grid.Column="2" HorizontalOptions="CenterAndExpand"
+                    <Label Text="{Binding AngleType}" Grid.Row="1" Grid.Column="2" HorizontalOptions="CenterAndExpand"
                 IsVisible="{Binding IsTriangleVisible}"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="18"/>
@@ -65,56 +65,95 @@
                 <!--  Якщо многокутник  -->
 
             </VerticalStackLayout>
-            
+
             <HorizontalStackLayout Spacing="25">
-            <Label Text="Довжини сторін" HorizontalOptions="CenterAndExpand" Grid.Column="2" 
+                <Label Text="Довжини сторін" HorizontalOptions="CenterAndExpand" Grid.Column="2" 
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="18"/>
-            <Label Text="Кути сторін (радіани)" HorizontalOptions="CenterAndExpand" Grid.Column="5" 
+                <Label Text="Кути сторін (радіани)" HorizontalOptions="CenterAndExpand" Grid.Column="5" 
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="18"/>
             </HorizontalStackLayout>
-
-            <Grid ColumnDefinitions="*,*,*,*,*,*,*"  HorizontalOptions="CenterAndExpand">
-                <CollectionView  ItemsSource="{Binding SidesNames}" Grid.Column="2" >
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="x:String">
-                            <Label Text="{Binding .}"/>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-                <CollectionView  ItemsSource="{Binding AllSides}" Grid.Column="3" >
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="x:Double">
-                            <Label Text="{Binding . , StringFormat='{0:F2}'}"/>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-                <CollectionView  ItemsSource="{Binding AnglesNames}" Grid.Column="5" >
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="x:String">
-                            <Label Text="{Binding .}"/>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-                <CollectionView  ItemsSource="{Binding AllAngles}" Grid.Column="6" >
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="x:Double">
-                            <Label Text="{Binding . , StringFormat='{0:F4}'}"/>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </Grid>
-
-            <Label Text="{Binding Perimeter, StringFormat=' Периметер = {0:F2}'}" HorizontalOptions="CenterAndExpand"
+            <Border HorizontalOptions="Center" Padding="10">
+                <Grid ColumnDefinitions="*,*,*,*,*,*,*"  HorizontalOptions="CenterAndExpand">
+                    <CollectionView  ItemsSource="{Binding SidesNames}" Grid.Column="2" >
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <Label Text="{Binding .}"/>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <CollectionView  ItemsSource="{Binding AllSides}" Grid.Column="3" >
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="x:Double">
+                                <Label Text="{Binding . , StringFormat='{0:F2}'}"/>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <CollectionView  ItemsSource="{Binding AnglesNames}" Grid.Column="5" >
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <Label Text="{Binding .}"/>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <CollectionView  ItemsSource="{Binding AllAngles}" Grid.Column="6" >
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="x:Double">
+                                <Label Text="{Binding . , StringFormat='{0:F4}'}"/>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </Border>
+            <Frame HorizontalOptions="Center" Padding="10">
+                <VerticalStackLayout>
+                <Label Text="{Binding Perimeter, StringFormat=' Периметер = {0:F2}'}" HorizontalOptions="CenterAndExpand"
                    SemanticProperties.HeadingLevel="Level2"
                 FontSize="18"/>
 
-            <Label Text="{Binding Area, StringFormat=' Площа = {0:F2}'}" HorizontalOptions="CenterAndExpand"
+                <Label Text="{Binding Area, StringFormat=' Площа = {0:F2}'}" HorizontalOptions="CenterAndExpand"
                    SemanticProperties.HeadingLevel="Level2"
                 FontSize="18"/>
+                </VerticalStackLayout>
+            </Frame>
 
             <!--Base info-->
+            
+            
+            <!--Триктуник-->
+            <Label Text="Висоти" HorizontalOptions="CenterAndExpand" IsVisible="{Binding IsTriangleVisible}"
+                   SemanticProperties.HeadingLevel="Level2" Margin="10" Padding="10"
+                FontSize="18"/>
+            <Border HorizontalOptions="Center" Padding="10" IsVisible="{Binding IsTriangleVisible}">
+                <Grid ColumnDefinitions="*,*,*,*"  HorizontalOptions="CenterAndExpand" >
+                    <CollectionView  ItemsSource="{Binding NormsNames}" Grid.Column="1" >
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <Label Text="{Binding .}"/>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <CollectionView  ItemsSource="{Binding AllNorms}" Grid.Column="3" >
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="x:Double">
+                                <Label Text="{Binding . , StringFormat='{0:F2}'}"/>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </Border>
+            <Frame HorizontalOptions="Center" Padding="10" IsVisible="{Binding IsTriangleVisible}">
+                <VerticalStackLayout>
+                    <Label Text="Ортоцентер" HorizontalOptions="CenterAndExpand" 
+                   SemanticProperties.HeadingLevel="Level2"
+                FontSize="18"/>
+                    <Label Text="{Binding Orthocentre, StringFormat='({0},{1})'}" HorizontalOptions="CenterAndExpand"
+                   SemanticProperties.HeadingLevel="Level2" 
+                FontSize="18"/>
+                </VerticalStackLayout>
+            </Frame>
+            <!--Триктуник-->
 
         </VerticalStackLayout>
     </ScrollView>

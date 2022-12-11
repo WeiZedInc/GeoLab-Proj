@@ -17,7 +17,15 @@ namespace GeoLab_Proj
         [ObservableProperty]
         List<double> allAngles = new();
         [ObservableProperty]
+        List<double> allNorms = new();
+        [ObservableProperty]
         List<string> sidesNames = new();
+
+        [ObservableProperty]
+        (double x, double y) orthocentre;
+
+        [ObservableProperty]
+        string[] normsNames = new string[] { "h1", "h2", "h3" };
 
         [ObservableProperty]
         string[] anglesNames = { "α", "β", "γ", "δ", "ε", "ζ", "η", "θ", "λ", "ω" };
@@ -62,6 +70,13 @@ namespace GeoLab_Proj
                 SideType = Figure.TriangleSideType().ToString();
                 angleType = Figure.TriangleAngleType().ToString();
                 isTriangleVisible = true;
+
+                var norms = Figure.FindNorms();
+                AllNorms.Add(norms.a);
+                AllNorms.Add(norms.b);
+                AllNorms.Add(norms.c);
+
+                Orthocentre = Figure.Orthocenter();
             }
             else if (FigureType == FigureTypeEnum.Чотирикутник.ToString())
             {
@@ -79,7 +94,7 @@ namespace GeoLab_Proj
                     PolygonType = "Правильний";
                 else
                     PolygonType = "Довільний";
-                IsPolygonVisible = true;
+                isPolygonVisible = true;
             }
         }
     }
