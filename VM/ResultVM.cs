@@ -23,9 +23,9 @@ namespace GeoLab_Proj
         string[] anglesNames = { "α", "β", "γ", "δ", "ε", "ζ", "η", "θ", "λ", "ω" };
 
         [ObservableProperty]
-        string sideType, angleType, quandrangleType, trapezoidType;
+        string sideType, angleType, quandrangleType, trapezoidType, polygonType;
         [ObservableProperty]
-        bool isTriangleVisible, isQuadrangleVisible, isTrapezoidVisible;
+        bool isTriangleVisible, isQuadrangleVisible, isTrapezoidVisible, isPolygonVisible;
 
         public ResultVM()
         {
@@ -35,12 +35,12 @@ namespace GeoLab_Proj
         public void OutputBaseInfo()
         {
             sidesCount = Figure.Points.Count;
-            FigureType =  Figure.FigureType().ToString();
+            FigureType = Figure.FigureType().ToString();
             MakeNames();
             AllSides = Figure.AllSides();
             AllAngles = Figure.AllAngles();
-            Perimeter= Figure.Perimeter();
-            Area= Figure.Area();
+            Perimeter = Figure.Perimeter();
+            Area = Figure.Area();
             SwitchOutput();
         }
 
@@ -49,7 +49,7 @@ namespace GeoLab_Proj
             string[] newAngles = new string[sidesCount];
             for (int i = 0; i < sidesCount; i++)
             {
-                sidesNames.Add($"{i+1}.");
+                sidesNames.Add($"{i + 1}.");
                 newAngles[i] = anglesNames[i];
             }
             anglesNames = newAngles;
@@ -63,15 +63,23 @@ namespace GeoLab_Proj
                 angleType = Figure.TriangleAngleType().ToString();
                 isTriangleVisible = true;
             }
-            else if(FigureType == FigureTypeEnum.Чотирикутник.ToString())
+            else if (FigureType == FigureTypeEnum.Чотирикутник.ToString())
             {
                 quandrangleType = Figure.QudrangleType().ToString();
-                isQuadrangleVisible= true;
+                isQuadrangleVisible = true;
                 if (quandrangleType == QudrangleTypeEnum.Трапеція.ToString())
                 {
                     trapezoidType = Figure.TrapezoidType().ToString();
                     isTrapezoidVisible = true;
                 }
+            }
+            else if (FigureType == FigureTypeEnum.Многокутник.ToString())
+            {
+                if (Figure.RightPolygon())
+                    PolygonType = "Правильний";
+                else
+                    PolygonType = "Довільний";
+                IsPolygonVisible = true;
             }
         }
     }
