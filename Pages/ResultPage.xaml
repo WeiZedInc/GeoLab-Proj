@@ -8,8 +8,8 @@
     <ScrollView HorizontalOptions="CenterAndExpand">
         <VerticalStackLayout  HorizontalOptions="CenterAndExpand">
             <VerticalStackLayout Margin="10" Padding="10" HorizontalOptions="CenterAndExpand">
+                <!--Base info-->
                 <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-                <!--  0,100 100,100 0,0  -->
                 <Label Text="Тип фігури: " Grid.Row="0" Grid.Column="0" HorizontalOptions="CenterAndExpand"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="18"/>
@@ -21,24 +21,41 @@
 
                 <!--  Якщо трикутник -->
                 <Label Text="Властивості трикутника: " Grid.Row="1" Grid.Column="0" HorizontalOptions="CenterAndExpand"
-                IsVisible="{Binding IsSideAngleTypeVisible}"
+                IsVisible="{Binding IsTriangleVisible}"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="18"/>
-                <HorizontalStackLayout IsVisible="{Binding IsSideAngleTypeVisible}" Spacing="10">
+                <HorizontalStackLayout IsVisible="{Binding IsTriangleVisible}" Spacing="10">
                 <Label Text="{Binding SideType}" Grid.Row="1" Grid.Column="1" HorizontalOptions="CenterAndExpand"
-                IsVisible="{Binding IsSideAngleTypeVisible}"
+                IsVisible="{Binding IsTriangleVisible}"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="18"/>
                 <Label Text="{Binding AngleType}" Grid.Row="1" Grid.Column="2" HorizontalOptions="CenterAndExpand"
-                IsVisible="{Binding IsSideAngleTypeVisible}"
+                IsVisible="{Binding IsTriangleVisible}"
+                SemanticProperties.HeadingLevel="Level2"
+                FontSize="18"/>
+                </HorizontalStackLayout>
+                <!--  Якщо трикутник  -->
+
+                <!--  Якщо трикутник -->
+                <Label Text="Властивості чотирикутника: " Grid.Row="1" Grid.Column="0" HorizontalOptions="CenterAndExpand"
+                IsVisible="{Binding IsQuadrangleVisible}"
+                SemanticProperties.HeadingLevel="Level2"
+                FontSize="18"/>
+                <HorizontalStackLayout IsVisible="{Binding IsQuadrangleVisible}" Spacing="10">
+                    <Label Text="{Binding QuandrangleType}" Grid.Row="1" Grid.Column="1" HorizontalOptions="CenterAndExpand"
+                IsVisible="{Binding IsQuadrangleVisible}"
+                SemanticProperties.HeadingLevel="Level2"
+                FontSize="18"/>
+                    <Label Text="{Binding TrapezoidType}" Grid.Row="1" Grid.Column="2" HorizontalOptions="CenterAndExpand"
+                IsVisible="{Binding IsTrapezoidVisible}"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="18"/>
                 </HorizontalStackLayout>
                 <!--  Якщо трикутник  -->
 
             </VerticalStackLayout>
+            <!--Base info-->
 
-            
 
             <Grid ColumnDefinitions="*,*,*,*,*,*,*" RowDefinitions="20*,80*" HorizontalOptions="CenterAndExpand">
                 <Label Text="Довжини сторін:" HorizontalOptions="CenterAndExpand" Grid.Column="2"  Grid.Row="0"

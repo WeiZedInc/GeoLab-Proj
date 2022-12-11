@@ -20,12 +20,12 @@ namespace GeoLab_Proj
         List<string> sidesNames = new();
 
         [ObservableProperty]
-        string[] anglesNames = { "AB", "BC", "AC" };
+        string[] anglesNames = { "α", "β", "γ", "δ", "ε", "ζ", "η", "θ", "λ", "ω" };
 
         [ObservableProperty]
-        string sideType, angleType;
+        string sideType, angleType, quandrangleType, trapezoidType;
         [ObservableProperty]
-        bool isSideAngleTypeVisible = false;
+        bool isTriangleVisible, isQuadrangleVisible, isTrapezoidVisible;
 
         public ResultVM()
         {
@@ -46,8 +46,13 @@ namespace GeoLab_Proj
 
         void MakeNames()
         {
+            string[] newAngles = new string[sidesCount];
             for (int i = 0; i < sidesCount; i++)
-                sidesNames.Add($"h{i+1}");
+            {
+                sidesNames.Add($"{i+1}.");
+                newAngles[i] = anglesNames[i];
+            }
+            anglesNames = newAngles;
         }
 
         void SwitchOutput()
@@ -55,12 +60,18 @@ namespace GeoLab_Proj
             if (FigureType == FigureTypeEnum.Трикутник.ToString())
             {
                 SideType = Figure.TriangleSideType().ToString();
-                AngleType = Figure.TriangleAngleType().ToString();
-                IsSideAngleTypeVisible = true;
+                angleType = Figure.TriangleAngleType().ToString();
+                isTriangleVisible = true;
             }
             else if(FigureType == FigureTypeEnum.Чотирикутник.ToString())
             {
-
+                quandrangleType = Figure.QudrangleType().ToString();
+                isQuadrangleVisible= true;
+                if (quandrangleType == QudrangleTypeEnum.Трапеція.ToString())
+                {
+                    trapezoidType = Figure.TrapezoidType().ToString();
+                    isTrapezoidVisible = true;
+                }
             }
         }
     }
