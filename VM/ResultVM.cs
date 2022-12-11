@@ -31,9 +31,10 @@ namespace GeoLab_Proj
         string[] anglesNames = { "α", "β", "γ", "δ", "ε", "ζ", "η", "θ", "λ", "ω" };
 
         [ObservableProperty]
-        string sideType, angleType, quandrangleType, trapezoidType, polygonType, medians, bisectors, circumscribed, inscribed, circlePossible;
+        string sideType, angleType, quandrangleType, trapezoidType, polygonType, medians, bisectors, 
+            circumscribed, inscribed, circlePossible, rightPolyInscCircle, rightPolyCircumCircle, centremass;
         [ObservableProperty]
-        bool isTriangleVisible, isQuadrangleVisible, isTrapezoidVisible, isPolygonVisible;
+        bool isTriangleVisible, isQuadrangleVisible, isTrapezoidVisible, isPolygonVisible, isRightPolygonVisible;
 
         public ResultVM()
         {
@@ -81,6 +82,9 @@ namespace GeoLab_Proj
                 var medi = Figure.FindMedians();
                 Medians = $"({medi.a:F2}; {medi.b:F2}; {medi.c:F2})";
 
+                var cent = Figure.MassCenter();
+                centremass = $"({cent.x:F2}; {cent.y:F2};)";
+
                 var bisec = Figure.FindBisectors();
                 Bisectors = $"({bisec.bisecA:F2}; {bisec.bisecB:F2}; {bisec.bisecC:F2})";
 
@@ -108,7 +112,15 @@ namespace GeoLab_Proj
             else if (FigureType == FigureTypeEnum.Многокутник.ToString())
             {
                 if (Figure.RightPolygon())
+                {
                     PolygonType = "Правильний";
+                    var inscr = Figure.RightInscr();
+                    var circum = Figure.RightCircum();
+
+                    rightPolyInscCircle = $"(x={inscr.x:F2}; y={inscr.y:F2}; R={inscr.radius:F2})";
+                    rightPolyCircumCircle = $"(x={circum.x:F2}; y={circum.y:F2}; r={circum.radius:F2})";
+                    IsRightPolygonVisible = true;
+                }
                 else
                     PolygonType = "Довільний";
                 isPolygonVisible = true;

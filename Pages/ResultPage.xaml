@@ -159,6 +159,13 @@
                    SemanticProperties.HeadingLevel="Level3" 
                 FontSize="17"/>
 
+                    <Label Text="Центри мас" HorizontalOptions="CenterAndExpand" Padding="10"
+                   SemanticProperties.HeadingLevel="Level2"
+                FontSize="18"/>
+                    <Label Text="{Binding Centremass}" HorizontalOptions="CenterAndExpand"
+                   SemanticProperties.HeadingLevel="Level3" 
+                FontSize="17"/>
+
                     <Label Text="Бісектриси" HorizontalOptions="CenterAndExpand" Padding="10"
                    SemanticProperties.HeadingLevel="Level2"
                 FontSize="18"/>
@@ -192,6 +199,26 @@
                 </VerticalStackLayout>
             </Frame>
             <!--Чотирикут-->
+
+            <!--Прав многокут-->
+            <Frame HorizontalOptions="Center" Padding="10" IsVisible="{Binding IsRightPolygonVisible}">
+                <VerticalStackLayout>
+                    <Label Text="Описане коло" HorizontalOptions="CenterAndExpand" Padding="10"
+                   SemanticProperties.HeadingLevel="Level2"
+                FontSize="18"/>
+                    <Label Text="{Binding RightPolyCircumCircle}" HorizontalOptions="CenterAndExpand"
+                   SemanticProperties.HeadingLevel="Level3" 
+                FontSize="17"/>
+
+                    <Label Text="Вписане коло" HorizontalOptions="CenterAndExpand" Padding="10"
+                   SemanticProperties.HeadingLevel="Level3"
+                FontSize="18"/>
+                    <Label Text="{Binding RightPolyInscCircle}" HorizontalOptions="CenterAndExpand"
+                   SemanticProperties.HeadingLevel="Level3" 
+                FontSize="17"/>
+                </VerticalStackLayout>
+            </Frame>
+            <!--Прав многокут-->
 
         </VerticalStackLayout>
     </ScrollView>
