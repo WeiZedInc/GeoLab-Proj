@@ -22,8 +22,7 @@ public partial class MainPage : ContentPage
         Figure.Points.Clear();
 
         mainVM.DrawPoints();
-
-        
+        InitializeComponent();
     }
 
     private async void CalculateBtn_Clicked(object sender, EventArgs e)
