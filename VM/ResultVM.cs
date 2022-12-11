@@ -31,7 +31,7 @@ namespace GeoLab_Proj
         string[] anglesNames = { "α", "β", "γ", "δ", "ε", "ζ", "η", "θ", "λ", "ω" };
 
         [ObservableProperty]
-        string sideType, angleType, quandrangleType, trapezoidType, polygonType, medians, bisectors, circumscribed, inscribed;
+        string sideType, angleType, quandrangleType, trapezoidType, polygonType, medians, bisectors, circumscribed, inscribed, circlePossible;
         [ObservableProperty]
         bool isTriangleVisible, isQuadrangleVisible, isTrapezoidVisible, isPolygonVisible;
 
@@ -93,6 +93,11 @@ namespace GeoLab_Proj
             else if (FigureType == FigureTypeEnum.Чотирикутник.ToString())
             {
                 quandrangleType = Figure.QudrangleType().ToString();
+                if (Figure.PossibleCircumscribed())
+                    circlePossible = "описане";
+                else
+                    circlePossible = "вписане";
+
                 isQuadrangleVisible = true;
                 if (quandrangleType == QudrangleTypeEnum.Трапеція.ToString())
                 {

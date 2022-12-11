@@ -182,6 +182,16 @@
                 </VerticalStackLayout>
             </Frame>
             <!--Триктуник-->
+            
+            <!--Чотирикут-->
+            <Frame HorizontalOptions="Center" Padding="10" IsVisible="{Binding IsQuadrangleVisible}">
+                <VerticalStackLayout>
+                    <Label Text="{Binding CirclePossible, StringFormat='Можливо {0} коло.'}" HorizontalOptions="CenterAndExpand"
+                   SemanticProperties.HeadingLevel="Level2" 
+                FontSize="18"/>
+                </VerticalStackLayout>
+            </Frame>
+            <!--Чотирикут-->
 
         </VerticalStackLayout>
     </ScrollView>
