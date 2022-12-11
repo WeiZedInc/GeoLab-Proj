@@ -31,7 +31,7 @@ namespace GeoLab_Proj
         string[] anglesNames = { "α", "β", "γ", "δ", "ε", "ζ", "η", "θ", "λ", "ω" };
 
         [ObservableProperty]
-        string sideType, angleType, quandrangleType, trapezoidType, polygonType;
+        string sideType, angleType, quandrangleType, trapezoidType, polygonType, medians, bisectors, circumscribed, inscribed;
         [ObservableProperty]
         bool isTriangleVisible, isQuadrangleVisible, isTrapezoidVisible, isPolygonVisible;
 
@@ -77,6 +77,18 @@ namespace GeoLab_Proj
                 AllNorms.Add(norms.c);
 
                 Orthocentre = Figure.Orthocenter();
+
+                var medi = Figure.FindMedians();
+                Medians = $"({medi.a:F2}; {medi.b:F2}; {medi.c:F2})";
+
+                var bisec = Figure.FindBisectors();
+                Bisectors = $"({bisec.bisecA:F2}; {bisec.bisecB:F2}; {bisec.bisecC:F2})";
+
+                var insc = Figure.InscribedCircle();
+                Inscribed = $"(x={insc.x:F2}; y={insc.y:F2}; R={insc.radius:F2})";
+
+                var circum = Figure.CircumscribedCircle();
+                Circumscribed = $"(x={circum.x:F2}; y={circum.y:F2}; r={circum.radius:F2})";
             }
             else if (FigureType == FigureTypeEnum.Чотирикутник.ToString())
             {
