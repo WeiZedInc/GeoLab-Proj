@@ -48,7 +48,7 @@ namespace GeoLab_Proj
             if (Figure.Points.Count < 2)
             {
                 Figure.Points.Clear();
-                await Shell.Current.DisplayAlert("Ooops", "Input coordinates first ;c", "Try again");
+                await Shell.Current.DisplayAlert("Ooops", "Working with minimum of two coordinates ;c", "Try again");
             }
             else
                 foreach (var point in Figure.Points)
